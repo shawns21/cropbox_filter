@@ -17,7 +17,9 @@ git clone https://github.com/shawns21/cropbox_filter.git
 Go back to your ~/ros2_ws and install dependencies with rosdep: 
 
 sudo rosdep init
+
 rosdep update
+
 rosdep install --from-paths src --ignore-src -r -y
 
 Then build the package:
