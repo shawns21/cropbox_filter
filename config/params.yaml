@@ -8,4 +8,4 @@ cropbox_filter_node:
     max_x: 0.5
     max_y: 0.5
     max_z: 0.5
-    leaf_size: 0.01
+    leaf_size: 0.1
