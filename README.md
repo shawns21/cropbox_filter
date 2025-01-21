@@ -10,11 +10,11 @@ All these parameters can be configured in the params.yml file in the config fold
 
 # Instructions to install
 
-Do this in your ~/ros2_ws/src directory:
+**Do this in your ~/ros2_ws/src directory:**
 
 git clone https://github.com/shawns21/cropbox_filter.git
 
-Go back to your ~/ros2_ws and install dependencies with rosdep: 
+**Go back to your ~/ros2_ws and install dependencies with rosdep:**
 
 sudo rosdep init
 
@@ -22,6 +22,6 @@ rosdep update
 
 rosdep install --from-paths src --ignore-src -r -y
 
-Then build the package:
+**Then build the package:**
 
 colcon build --packages-select cropbox_filter
