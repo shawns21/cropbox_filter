@@ -2,7 +2,7 @@
 
 This ROS2 Node creates a cropbox filter around the sensor, you can set the x, y and z values for how big you want to box to be around the sensor. 
 
-Also, the leaf size can be configured to set the voxel grid filter. 
+There is also another launch file that launches the voxelgrid filter node, the leaf size can be configured to set the voxel grid filter. 
 
 The input cloud that the node subscribes to is /input_cloud by default and the filtered output cloud is sent to the topic /output_cloud. 
 
