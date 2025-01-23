@@ -6,13 +6,13 @@ from ament_index_python.packages import get_package_share_directory
 def generate_launch_description():
     # Get the share directory for cropbox_filter
     config_directory = get_package_share_directory('cropbox_filter')
-    config_file = os.path.join(config_directory, 'config', 'cropbox_params.yaml')
+    config_file = os.path.join(config_directory, 'config', 'voxelgrid_params.yaml')
 
     return LaunchDescription([
         Node(
             package='cropbox_filter',
-            executable='cropbox_filter_node',
-            name='cropbox_filter_node',
+            executable='voxelgrid_filter_node',
+            name='voxelgrid_filter_node',
             output='screen',
             parameters=[config_file]
         )

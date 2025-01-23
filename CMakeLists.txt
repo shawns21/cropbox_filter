@@ -28,10 +28,17 @@ if(BUILD_TESTING)
 endif()
 
 add_executable(cropbox_filter_node src/cropbox_filter.cpp)
+add_executable(voxelgrid_filter_node src/voxelgrid_filter.cpp)
 ament_target_dependencies(cropbox_filter_node rclcpp sensor_msgs pcl_ros)
+ament_target_dependencies(voxelgrid_filter_node rclcpp sensor_msgs pcl_ros)
 target_link_libraries(cropbox_filter_node ${PCL_LIBRARIES})
+target_link_libraries(voxelgrid_filter_node ${PCL_LIBRARIES})
 
 install(TARGETS cropbox_filter_node 
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+install(TARGETS voxelgrid_filter_node 
   DESTINATION lib/${PROJECT_NAME}
 )
 

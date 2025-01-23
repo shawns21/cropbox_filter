@@ -1,0 +1,5 @@
+voxelgrid_filter_node:
+  ros__parameters:
+    input_cloud: "/velodyne_points"
+    output_cloud: "/voxel_filter/velodyne_points"
+    leaf_size: 0.1
