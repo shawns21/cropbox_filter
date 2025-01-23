@@ -1,6 +1,6 @@
 # Cropbox Filter and VoxelGrid Filter
 
-This ROS2 Node creates a cropbox filter around the sensor, you can set the x, y and z values for how big you want to box to be around the sensor. 
+This ROS2 Node creates a cropbox filter around your 3D LiDAR sensor that collects PointCloud2 points, you can set the x, y and z values for how big you want to box to be around the sensor. 
 
 There is also another launch file that launches the voxelgrid filter node, the leaf size can be configured to set the voxel grid filter. 
 
