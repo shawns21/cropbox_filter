@@ -28,10 +28,19 @@ public:
         this->get_parameter("max_x", max_x_);
         this->get_parameter("max_y", max_y_);
         this->get_parameter("max_z", max_z_);
+
+
+	// Best Effort QOS Profile
+	rclcpp::QoS best_effort_qos(rclcpp::QoSInitialization::from_rmw(rmw_qos_profile_default));
+	best_effort_qos
+	    .reliability(RMW_QOS_POLICY_RELIABILITY_BEST_EFFORT)
+	    .durability(RMW_QOS_POLICY_DURABILITY_VOLATILE)
+	    .history(RMW_QOS_POLICY_HISTORY_KEEP_LAST)
+	    .keep_last(10);
 	
         //Creating subscriber that subscribes to the unfiltered pointcloud and the publisher that publishes the filtered pointcloud
         cloud_sub_ = this->create_subscription<sensor_msgs::msg::PointCloud2>(
-            input_topic, 10, std::bind(&CropBoxFilterNode::pointCloudCallback, this, std::placeholders::_1));
+            input_topic, best_effort_qos, std::bind(&CropBoxFilterNode::pointCloudCallback, this, std::placeholders::_1));
         cloud_pub_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(output_topic, 10);
 
         RCLCPP_INFO(this->get_logger(), "CropBoxFilterNode started.");
@@ -41,12 +50,12 @@ private:
     void pointCloudCallback(const sensor_msgs::msg::PointCloud2::SharedPtr msg) {
 
 	//Convert the Pointcloud msg to PCL format
-        pcl::PCLPointCloud2::Ptr pcl_input(new pcl::PCLPointCloud2());
-        pcl_conversions::toPCL(*msg, *pcl_input);
+        pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_input(new pcl::PointCloud<pcl::PointXYZ>());
+	pcl::fromROSMsg(*msg, *pcl_input);
 
         //Apply the crop box filter
-        pcl::PCLPointCloud2::Ptr pcl_cropped(new pcl::PCLPointCloud2());
-        pcl::CropBox<pcl::PCLPointCloud2> crop_filter;
+        pcl::PointCloud<pcl::PointXYZ>::Ptr pcl_cropped(new pcl::PointCloud<pcl::PointXYZ>());
+        pcl::CropBox<pcl::PointXYZ> crop_filter;
         crop_filter.setInputCloud(pcl_input);
         crop_filter.setMin(Eigen::Vector4f(min_x_, min_y_, min_z_, 1.0));
         crop_filter.setMax(Eigen::Vector4f(max_x_, max_y_, max_z_, 1.0));
@@ -55,7 +64,7 @@ private:
 
         //Convert back to ROS message and publish
         sensor_msgs::msg::PointCloud2 output_msg;
-        pcl_conversions::fromPCL(*pcl_cropped, output_msg);
+	pcl::toROSMsg(*pcl_cropped, output_msg);
         output_msg.header = msg->header; //Keep the original header
         cloud_pub_->publish(output_msg);
     }
@@ -75,4 +84,3 @@ int main(int argc, char **argv) {
     rclcpp::shutdown();
     return 0;
 }
-
