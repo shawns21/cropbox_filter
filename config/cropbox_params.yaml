@@ -1,7 +1,7 @@
 cropbox_filter_node:
   ros__parameters:
-    input_cloud: "/velodyne_points"
-    output_cloud: "/cropbox_filter/velodyne_points"
+    input_cloud: "/ouster/points"
+    output_cloud: "/cropbox_filter/ouster/points"
     min_x: -0.5
     min_y: -0.5
     min_z: -0.5
